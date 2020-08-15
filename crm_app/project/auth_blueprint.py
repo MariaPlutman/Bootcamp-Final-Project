@@ -7,9 +7,11 @@ from .forms import RequestForm
 
 auth = Blueprint('auth', __name__)
 
+
 @auth.route('/login')
 def login():
     return render_template('login.html')
+
 
 @auth.route('/login', methods=['POST'])
 def login_post():
@@ -26,19 +28,17 @@ def login_post():
     login_user(user, remember=remember)
     return redirect(url_for('main.profile'))
 
+
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login.html'))
 
-@auth.route('/inquiries',methods=('GET', 'POST'))
-def request():
-	form = RequestForm()
-	if form.validate_on_submit():
-		return redirect(url_for('success'))
-    return render_template('login.html',form=form)
 
-
-
-
+@auth.route('/inquiries', methods=('GET', 'POST'))
+def request_form():
+    form = RequestForm()
+    if form.validate_on_submit():
+        return redirect(url_for('success'))
+    return render_template('request.html', form=form)
