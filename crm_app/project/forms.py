@@ -63,8 +63,8 @@ class TelephoneForm(Form):
 
 
 class RequestForm(FlaskForm):
-    project = SelectField(
-        choices=[(project.name, project.value) for project in Project])
+    project = SelectField("label",
+                          choices=[(project.name, project.value) for project in Project])
     school_id = IntegerField('School ID', validators=[Length(max=6)])
     school_name = StringField('School Name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
@@ -81,3 +81,4 @@ class RequestForm(FlaskForm):
         choices=[(service.name, service.value) for service in Service])
     body = TextField('Message', [DataRequired(), Length(
         min=4, message=('Your message is too short.'))])
+    submit = SubmitField("Post")

@@ -13,38 +13,66 @@
 		{% endwith %}
 		<form method="POST" action="/request">
 			<form method="POST" action="/request">
+
 				<div class="field">
-					<div class="control">
-						<input class="input is-large" type="text" name="School ID">
-					</div>
+					{{ form.project.label }}
+					{{ form.project(class="control") }}
 				</div>
+
 				<div class="field">
-					<div class="control">
-						<input class="input is-large" type="text" name="School ID">
-					</div>
+					{{ form.school_id.label }}
+					{{ form.school_id(class="control") }}
 				</div>
+
 				<div class="field">
-					<div class="control">
-						<input class="input is-large" type="text" name="School Name">
-					</div>
+					{{ form.school_name.label }}
+					{{ form.school_name(class="control") }}
 				</div>
+
 				<div class="field">
-					<div class="control">
-						<input class="input is-large" type="tel" name="Phone">
-					</div>
+					{{ form.username.label }}
+					{{ form.username(class="control") }}
 				</div>
+
 				<div class="field">
-					<div class="control">
-						<input class="input is-large" type="email" name="email" autofocus="">
-					</div>
+					{{ form.client.label }}
+					{{ form.client(class="control") }}
 				</div>
+
 				<div class="field">
-					<div class="control">
-						<input class="input is-large" type="text" name="Message">
-					</div>
+					{{ form.phone.label }}
+					{{ form.phone(class="control") }}
 				</div>
-				<button class="button is-block is-info is-large is-fullwidth">Send</button>
+
+				<div class="field">
+					{{ form.email.label }}
+					{{ form.email(class="control") }}
+				</div>
+
+				<div class="field">
+					{{ form.problem_type.label }}
+					{{ form.problem_type(class="control") }}
+				</div>
+
+				<div class="field">
+					{{ form.status.label }}
+					{{ form.status(class="control") }}
+				</div>
+
+				<div class="field">
+					{{ form.service.label }}
+					{{ form.service(class="control") }}
+				</div>
+
+				<div class="field">
+					{{ form.body.label }}
+					{{ form.body(class="control") }}
+				</div>
+
+				{{ form.submit(class="button is-block is-info is-large is-fullwidth") }}
+
 			</form>
+		</form>
 	</div>
 </div>
 {% endblock %}
