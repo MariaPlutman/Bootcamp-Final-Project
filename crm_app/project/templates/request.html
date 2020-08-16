@@ -1,13 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="formwrapper">
-	<h2 class="title">Request</h2>
-	<form method="POST" action="/">
-		<div class="form-field">{{ form.project.label }} {{ form.name(size=20) }}</div>
-		<div class="form-field">{{ form.email.label }} {{ form.email }}</div>
-		<div class="form-field">{{ form.body.label }} {{ form.body }}</div>
-		{{ form.submit }}
-	</form>
+<div class="column is-4 is-offset-4">
+	<h3 class="title">Request</h3>
+	<div class="box">
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		<div class="notification is-danger">
+			{{ messages[0] }}
+		</div>
+		{% endif %}
+		{% endwith %}
+		<form method="POST" action="/request">
+			<form method="POST" action="/request">
+				<div class="field">
+					<div class="control">
+						<input class="input is-large" type="text" name="School ID">
+					</div>
+				</div>
+				<div class="field">
+					<div class="control">
+						<input class="input is-large" type="text" name="School ID">
+					</div>
+				</div>
+				<div class="field">
+					<div class="control">
+						<input class="input is-large" type="text" name="School Name">
+					</div>
+				</div>
+				<div class="field">
+					<div class="control">
+						<input class="input is-large" type="tel" name="Phone">
+					</div>
+				</div>
+				<div class="field">
+					<div class="control">
+						<input class="input is-large" type="email" name="email" autofocus="">
+					</div>
+				</div>
+				<div class="field">
+					<div class="control">
+						<input class="input is-large" type="text" name="Message">
+					</div>
+				</div>
+				<button class="button is-block is-info is-large is-fullwidth">Send</button>
+			</form>
+	</div>
 </div>
 {% endblock %}

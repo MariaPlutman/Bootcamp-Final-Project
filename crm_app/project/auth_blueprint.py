@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
 from .models import User
 from . import db
-from .forms import RequestForm
+
 
 auth = Blueprint('auth', __name__)
 
@@ -34,11 +34,3 @@ def login_post():
 def logout():
     logout_user()
     return redirect(url_for('login.html'))
-
-
-@auth.route('/inquiries', methods=('GET', 'POST'))
-def request_form():
-    form = RequestForm()
-    if form.validate_on_submit():
-        return redirect(url_for('success'))
-    return render_template('request.html', form=form)

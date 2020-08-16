@@ -3,6 +3,59 @@ from wtforms import StringField, SelectField, SubmitField, IntegerField, FormFie
 from wtforms.validators import DataRequired, Length, Required, Email
 
 
+from enum import Enum
+
+
+class Project(Enum):
+    SKILLZ = 'Skillz'
+    MATIFIC = '10 אצבעות (Matific)'
+    PLETHORA = 'plethora'
+    ICODE = 'icode'
+    ACCELIUM = 'accelium'
+    ROBOTICS = 'רובוטיקה'
+    OTHER = 'אחר'
+
+
+class Client(Enum):
+    TEACHER = 'מורה'
+    PARENT = 'הורה'
+    DIRECTOR = 'מנהל'
+    STUDENT = 'תלמיד'
+
+
+class Problem(Enum):
+    OTHER = 'אחר'
+    SLOW = 'איטיות'
+    CONNECTION = 'בעית התחברות'
+    START = 'הרצת סבב'
+    AUTH = 'הרשאה לרכז רשום'
+    ENTRY = 'כניסה לתחרות'
+    NEXTLEVEL = 'לא עובר לשלב הבא'
+    RESULT = 'לוח תוצאות'
+    SYSTEM = 'מערכת לא עובדת'
+    REGISTR = 'רישום'
+    QCODE = 'שאלה בקוד'
+    QGAME = 'שאלה בתוך המשחק'
+    SALES = 'שיווק'
+    LANG = 'שפות'
+
+
+class Status(Enum):
+    NEW = 'פנייה חדשה'
+    INPROCESS = 'בטיפול'
+    FINISHED = 'טופל'
+
+
+class Service(Enum):
+    SKILLZ = 'Skillz'
+    MATIFIC = 'Matific'
+    PLETHORA = 'plethora'
+    ICODE = 'icode'
+    ACCELIUM = 'accelium'
+    ROBOTICS = 'רובוטיקה'
+    PORTAL = 'אחר'
+
+
 class TelephoneForm(Form):
     country_code = IntegerField('Country Code', [Required()])
     area_code = IntegerField('Area Code/Exchange', [Required()])
@@ -10,19 +63,21 @@ class TelephoneForm(Form):
 
 
 class RequestForm(FlaskForm):
-    project = SelectField(choices=[
-                          'Skillz', '10 אצבעות (Matific)', 'plethora', 'icode', 'accelium', 'רובוטיקה', 'אחר'])
+    project = SelectField(
+        choices=[(project.name, project.value) for project in Project])
     school_id = IntegerField('School ID', validators=[Length(max=6)])
-    school_name = StringField('School Nmae', validators=[DataRequired()])
+    school_name = StringField('School Name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
-    client = SelectField(choices=['מורה', 'הורה', 'מנהל', 'תלמיד'])
+    client = SelectField(
+        choices=[(client.name, client.value) for client in Client])
     phone = FormField(TelephoneForm)
     email = StringField(
         'Email', [Email(message='Not a valid email address.'), DataRequired()])
-    problem_type = SelectField(choices=['אחר', 'איטיות', 'בעית התחברות', 'הרצת סבב', 'הרשאה לרכז רשום', 'כניסה לתחרות',
-                                        'לא עובר לשלב הבא', 'לוח תוצאות', 'מערכת לא עובדת', 'רישום', 'שאלה בקוד', 'שאלה בתוך המשחק', 'שיווק', 'שפות'])
-    status = SelectField(choices=['פנייה חדשה', 'בטיפול', 'טופל'])
-    external_care = SelectField(
-        choices=['skillz', 'matific', 'plethora', 'accelium', 'icode', 'רובוטיקה', 'פורטל'])
+    problem_type = SelectField(
+        choices=[(problem.name, problem.value) for problem in Problem])
+    status = SelectField(
+        choices=[(status.name, status.value) for status in Status])
+    service = SelectField(
+        choices=[(service.name, service.value) for service in Service])
     body = TextField('Message', [DataRequired(), Length(
         min=4, message=('Your message is too short.'))])
