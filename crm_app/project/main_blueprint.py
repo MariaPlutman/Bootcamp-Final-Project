@@ -3,7 +3,6 @@ from . import db
 from flask_login import login_required, current_user
 from .forms import RequestForm
 import smtplib
-import os
 
 main = Blueprint('main', __name__)
 
@@ -19,15 +18,16 @@ def profile():
     return render_template('profile.html', name=current_user.name)
 
 
-@main.route('/request', methods=['POST'])
-def request_form():
+@main.route('/request/new', methods=['POST'])
+def submit_request():
     form = RequestForm()
 
-    message = "בקשתך הועברה לטיפול"
+    message = "יש לך פנייה חדשה"
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
-    server.login("myemail@gmail.com", os.getenv("PASSWORD"))
+    server.login("skillzSupport@taldor.co.il", "PASSWORD")
 
     if form.validate_on_submit():
+        server.sendmail("", message)
         return redirect(url_for('success'))
     return render_template('request.html', form=form)
