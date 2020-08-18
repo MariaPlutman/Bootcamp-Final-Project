@@ -34,5 +34,5 @@ def profile():
 
 
 @main.route('/request')
-def inquiries():
+def request():
     return render_template('request.html')
