@@ -33,6 +33,3 @@ def profile():
 #     return render_template('request.html', form=form)
 
 
-@main.route('/request')
-def request():
-    return render_template('request.html')

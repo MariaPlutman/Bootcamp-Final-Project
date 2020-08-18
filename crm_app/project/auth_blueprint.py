@@ -60,3 +60,8 @@ def signup_post():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+
+@auth.route('/request_det')
+def request_det():
+    return render_template('request_det.html')
