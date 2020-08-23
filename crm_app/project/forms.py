@@ -56,7 +56,7 @@ class Service(Enum):
     PORTAL = 'אחר'
 
 class RequestForm(FlaskForm):
-    project = SelectField("label",
+    project = SelectField("Project",
                           choices=[(project.name, project.value) for project in Project])
     school_id = IntegerField('School ID', validators=[Length(max=6)])
     school_name = StringField('School Name', validators=[DataRequired()])

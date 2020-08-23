@@ -65,8 +65,11 @@ def logout():
 @auth.route('/request_det')
 def request_det():
     form = forms.RequestForm()
-
     return render_template('request_det.html', form=form)
+
+@auth.route('/tables')
+def tables():
+    return render_template('tables.html')
 
 # @auth.route('/request_det')
 # def request_send():
@@ -83,6 +86,3 @@ def request_det():
 #         mail.send(msg)
 #     return render_template('request_det.html', form=form)
 
-@auth.route('/tables')
-def tables():
-    return render_template('tables.html')

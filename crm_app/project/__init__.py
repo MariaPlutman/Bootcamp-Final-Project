@@ -1,25 +1,33 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+import flask_migrate
+import flask_mail
+import os
 
 db = SQLAlchemy()
+migrate = flask_migrate.Migrate()
+login_mgr = LoginManager()
+mail_mgr  = flask_mail.Mail()
 
 
 def create_app():
+    from .config import config
+
     app = Flask(__name__)
 
-    app.config['SECRET_KEY'] = 'secret-key-goes-here'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    env = os.environ.get("FLASK_ENV", "development")
+    app.config.from_object(config[env])
 
     db.init_app(app)
-
-    login_manager = LoginManager()
-    login_manager.login_view = 'auth.login'
-    login_manager.init_app(app)
+    login_mgr.login_view = 'auth.login'
+    login_mgr.init_app(app)
+    migrate.init_app(app, db)
+    mail_mgr.init_app(app)
 
     from .models import User, Request, Project, Client
 
-    @login_manager.user_loader
+    @login_mgr.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
