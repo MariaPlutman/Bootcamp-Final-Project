@@ -55,13 +55,6 @@ class Service(Enum):
     ROBOTICS = 'רובוטיקה'
     PORTAL = 'אחר'
 
-
-class TelephoneForm(Form):
-    country_code = IntegerField('Country Code', [Required()])
-    area_code = IntegerField('Area Code/Exchange', [Required()])
-    number = StringField('Number')
-
-
 class RequestForm(FlaskForm):
     project = SelectField("label",
                           choices=[(project.name, project.value) for project in Project])
@@ -70,7 +63,7 @@ class RequestForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     client = SelectField(
         choices=[(client.name, client.value) for client in Client])
-    phone = FormField(TelephoneForm)
+    phone = StringField('Number')
     email = StringField(
         'Email', [Email(message='Not a valid email address.'), DataRequired()])
     problem_type = SelectField(

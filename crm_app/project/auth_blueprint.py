@@ -4,7 +4,6 @@ from flask_login import login_user, logout_user, login_required
 from .models import User, Client, Request, Project
 from . import db
 from . import forms
-from . import Mail, Message
 
 auth = Blueprint('auth', __name__)
 
@@ -69,17 +68,21 @@ def request_det():
 
     return render_template('request_det.html', form=form)
 
-@auth.route('/request_det')
-def request_send():
-    form = forms.RequestForm()
-    if form.is_submitted():
-        msg = Message('Hey There', recipients=[
-                    'plutman00@mail.ru'])
-        # msg.add_recipient('ibraham.derik@andyes.net')
-        msg.body = '<b>This is a test email sent from Maria\'s app. You don\'t need to reply.</b>'
+# @auth.route('/request_det')
+# def request_send():
+#     form = forms.RequestForm()
+#     if form.is_submitted():
+#         msg = Message('Hey There', recipients=[
+#                     'plutman00@mail.ru'])
+#         # msg.add_recipient('ibraham.derik@andyes.net')
+#         msg.body = '<b>This is a test email sent from Maria\'s app. You don\'t need to reply.</b>'
 
-        with app.open_resource('cat.jpeg') as cat:
-            msg.attach('cat.jpeg', 'image/jpeg', cat.read())
+#         with app.open_resource('cat.jpeg') as cat:
+#             msg.attach('cat.jpeg', 'image/jpeg', cat.read())
 
-        mail.send(msg)
-    return render_template('request_det.html', form=form)
+#         mail.send(msg)
+#     return render_template('request_det.html', form=form)
+
+@auth.route('/tables')
+def tables():
+    return render_template('tables.html')
