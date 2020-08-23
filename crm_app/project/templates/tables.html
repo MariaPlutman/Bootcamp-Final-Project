@@ -44,17 +44,19 @@
                     </tr>
                   </thead>
                   <tbody>
+                    {% for request in requests %}
                     <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                      <td>{{ request.username }}</td>
+                      <td>{{ request.client_id }}</td>
+                      <td>{{ request.school_name }}</td>
+                      <td>{{ school_id }}</td>
+                      <td>{{ request.phone }}</td>
+                      <td>{{ request.email }}</td>
+                      <td>{{ request.username }}</td>
+                      <td>{{ request.problem }}</td>
+                      <td>{{ request.project }}</td>
                     </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>

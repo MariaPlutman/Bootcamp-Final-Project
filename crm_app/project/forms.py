@@ -58,11 +58,12 @@ class Service(Enum):
 class RequestForm(FlaskForm):
     project = SelectField("Project",
                           choices=[(project.name, project.value) for project in Project])
-    school_id = IntegerField('School ID', validators=[Length(max=6)])
+    school_id = StringField('School ID', validators=[Length(max=6)])
     school_name = StringField('School Name', validators=[DataRequired()])
-    username = StringField('Username', validators=[DataRequired()])
+    username = StringField('Client Name', validators=[DataRequired()])
     client = SelectField(
         choices=[(client.name, client.value) for client in Client])
+    client_id = StringField('Client ID', validators=[Length(max=9)])
     phone = StringField('Number')
     email = StringField(
         'Email', [Email(message='Not a valid email address.'), DataRequired()])

@@ -67,9 +67,31 @@ def request_det():
     form = forms.RequestForm()
     return render_template('request_det.html', form=form)
 
+@auth.route('/request_det',methods=['POST'])
+def request_post():
+    form = forms.RequestForm()
+
+    if form.validate_on_submit():
+        username = request.form.get('username')
+        client_id = request.form.get('client_id')
+        school_name = request.form.get('school_name')
+        school_id = request.form.get('school_id')
+        phone = request.form.get('phone')
+        email = request.form.get('email')
+        project = request.form.get('project')
+        problem = request.form.get('problem')
+
+        new_request = Request(username=username,client_id=client_id,school_name=school_name,school_id=school_id,phone=phone,email=email,project=project,problem=problem)
+
+        db.session.add(new_request)
+        db.session.commit()
+
+    return redirect(url_for('main.profile'))
+
 @auth.route('/tables')
 def tables():
-    return render_template('tables.html')
+    requests = Request.query.all()
+    return render_template('tables.html', requests=requests)
 
 # @auth.route('/request_det')
 # def request_send():
