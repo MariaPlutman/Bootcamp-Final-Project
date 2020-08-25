@@ -45,20 +45,21 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for row in request %}
+                    {% for request in requests %}
                     <tr>
-                      <td>{{ row.0 }}</td>
-                      <td>{{ row.0 }}</td>
-                      <td>{{ row.0 }}</td>
-                      <td>{{ row.0 }}</td>
-                      <td>{{ row.0 }}</td>
-                      <td>{{ row.0 }}</td>
-                      <td>{{ row.0 }}</td>
-                      <td>{{ row.0 }}</td>
-                      <td>{{ row.0 }}</td>
-                      <a href="/update/{{row.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
+                      <td>{{ request.username }}</td>
+                      <td>{{ request.client_id }}</td>
+                      <td>{{ request.school_name }}</td>
+                      <td>{{ request.school_id }}</td>
+                      <td>{{ request.phone }}</td>
+                      <td>{{ request.email }}</td>
+                      <td>{{ request.project_id }}</td>
+                      <td>{{ request.problem }}</td>
+                      <td>{{ request.date }}</td>
+                      
+                      <a href="/update/{{request.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{request.0}}">Edit</a>
                     </tr>
-                    <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+                    <div id="modaledit{{request.id}}" class="modal fade" role="dialog">
                       <div class="modal-dialog">
                     
                     
@@ -137,6 +138,9 @@
                     
                     
                             </div>
+                         </div>
+                      </div>
+                    </div>
                     {% endfor %}
                   </tbody>
                 </table>
