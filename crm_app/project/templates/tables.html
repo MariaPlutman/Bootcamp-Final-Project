@@ -41,21 +41,102 @@
                       <th>Project</th>
                       <th>Problem</th>
                       <th>Date</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for request in requests %}
+                    {% for row in request %}
                     <tr>
-                      <td>{{ request.username }}</td>
-                      <td>{{ request.client_id }}</td>
-                      <td>{{ request.school_name }}</td>
-                      <td>{{ school_id }}</td>
-                      <td>{{ request.phone }}</td>
-                      <td>{{ request.email }}</td>
-                      <td>{{ request.username }}</td>
-                      <td>{{ request.problem }}</td>
-                      <td>{{ request.project }}</td>
+                      <td>{{ row.0 }}</td>
+                      <td>{{ row.0 }}</td>
+                      <td>{{ row.0 }}</td>
+                      <td>{{ row.0 }}</td>
+                      <td>{{ row.0 }}</td>
+                      <td>{{ row.0 }}</td>
+                      <td>{{ row.0 }}</td>
+                      <td>{{ row.0 }}</td>
+                      <td>{{ row.0 }}</td>
+                      <a href="/update/{{row.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
                     </tr>
+                    <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                    
+                    
+                         <div class="modal-content">
+                    
+                    
+                            <div class="modal-header">
+                    
+                    
+                               <h4 class="modal-title">Update Information</h4>
+                    
+                    
+                            </div>
+                    
+                    
+                            <div class="modal-body">
+                    
+                    
+                               <form action="{{url_for('update')}}" method="POST">
+                    
+                    
+                                  <div class="form-group">
+                    
+                    
+                                     <label>Name:</label>
+                                      <input type="hidden"  name="id" value="{{row.id}}">
+                    
+                                     <input type="text" class="form-control" name="name" value="{{row.name}}">
+                    
+                    
+                                  </div>
+                    
+                    
+                    
+                                  <div class="form-group">
+                    
+                    
+                                     <label>Email:</label>
+                    
+                                     <input type="text" class="form-control" name="email" value="{{row.email}}">
+                    
+                    
+                                  </div>
+                    
+                    
+                                  <div class="form-group">
+                    
+                    
+                                     <label>Phone:</label>
+                    
+                                     <input type="text" class="form-control" name="phone" value="{{row.phone}}">
+                    
+                    
+                                  </div>
+                    
+                    
+                                  <div class="form-group">
+                    
+                    
+                                     <button class="btn btn-primary" type="submit">Update</button>
+                    
+                    
+                                  </div>
+                    
+                    
+                               </form>
+                    
+                    
+                            </div>
+                    
+                    
+                            <div class="modal-footer">
+                    
+                    
+                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    
+                    
+                            </div>
                     {% endfor %}
                   </tbody>
                 </table>

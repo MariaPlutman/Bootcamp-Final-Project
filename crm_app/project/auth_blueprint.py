@@ -86,26 +86,33 @@ def request_post():
         db.session.add(new_request)
         db.session.commit()
 
-    print(form.errors)
-    return redirect(url_for('main.profile'))
+        flash("Request Sent Successfully")
+
+    return redirect(url_for('Tables'))
 
 @auth.route('/tables')
 def tables():
-    requests = Request.query.all()
-    return render_template('tables.html', requests=requests)
+    data = Request.query.all()
+    return render_template('tables.html', request=data)
 
-# @auth.route('/request_det')
-# def request_send():
-#     form = forms.RequestForm()
-#     if form.is_submitted():
-#         msg = Message('Hey There', recipients=[
-#                     'plutman00@mail.ru'])
-#         # msg.add_recipient('ibraham.derik@andyes.net')
-#         msg.body = '<b>This is a test email sent from Maria\'s app. You don\'t need to reply.</b>'
+@auth.route('/update', methods = ['GET', 'POST'])
+def update():
+ 
+    if request.method == 'POST':
+        data = Request.query.get(request.form.get('id'))
+ 
+        username = request.form.get('username')
+        client_id = request.form.get('client_id')
+        school_name = request.form.get('school_name')
+        school_id = request.form.get('school_id')
+        phone = request.form.get('phone')
+        email = request.form.get('email')
+        project = request.form.get('project')
+        problem = request.form.get('problem')
+ 
+        db.session.commit()
+        flash("Request Updated Successfully")
+ 
+        return redirect(url_for('Tables'))
 
-#         with app.open_resource('cat.jpeg') as cat:
-#             msg.attach('cat.jpeg', 'image/jpeg', cat.read())
-
-#         mail.send(msg)
-#     return render_template('request_det.html', form=form)
 
