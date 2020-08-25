@@ -95,24 +95,5 @@ def tables():
     data = Request.query.all()
     return render_template('tables.html', request=data)
 
-@auth.route('/update', methods = ['GET', 'POST'])
-def update():
- 
-    if request.method == 'POST':
-        data = Request.query.get(request.form.get('id'))
- 
-        username = request.form.get('username')
-        client_id = request.form.get('client_id')
-        school_name = request.form.get('school_name')
-        school_id = request.form.get('school_id')
-        phone = request.form.get('phone')
-        email = request.form.get('email')
-        project = request.form.get('project')
-        problem = request.form.get('problem')
- 
-        db.session.commit()
-        flash("Request Updated Successfully")
- 
-        return redirect(url_for('Tables'))
 
 
