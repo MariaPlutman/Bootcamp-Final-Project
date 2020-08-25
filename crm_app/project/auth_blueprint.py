@@ -86,6 +86,7 @@ def request_post():
         db.session.add(new_request)
         db.session.commit()
 
+    print(form.errors)
     return redirect(url_for('main.profile'))
 
 @auth.route('/tables')
