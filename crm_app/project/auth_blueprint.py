@@ -79,15 +79,15 @@ def request_post():
         school_id = form.school_id.data
         phone = form.phone.data
         email = form.email.data
-        project_name = form.project.data
+        games = form.games.data
         problem = form.problem.data
         message = form.message.data
         
-        new_request = Request(username=username,client_id=client_id,school_name=school_name,school_id=school_id,phone=phone,email=email,problem=problem, message=message)
+        new_request = Request(username=username,client_id=client_id,school_name=school_name,school_id=school_id,phone=phone,email=email,problem=problem, message=message, games=games)
         
-        project = models.Project.query.filter_by(name=project_name).first()
+        # project = models.Project.query.filter_by(name=project_name).first()
 
-        new_request.project = project
+        # new_request.project = project
 
         db.session.add(new_request)
         db.session.commit()
@@ -114,7 +114,7 @@ def update():
         my_data.username = request.form['username']
         my_data.phone = request.form['phone']
         my_data.email = request.form['email']
-        my_data.project = request.form['project']
+        my_data.games = request.form['games']
         my_data.problem = request.form['problem']
         my_data.message = request.form['message']
         
@@ -122,6 +122,7 @@ def update():
         flash("Employee Updated Successfully")
  
         return redirect(url_for('auth.tables'))
+
 
 @auth.route('/delete/<id>/', methods = ['GET', 'POST'])
 def delete(id):
@@ -131,3 +132,12 @@ def delete(id):
     flash("Employee Deleted Successfully")
  
     return redirect(url_for('auth.tables'))
+
+@auth.route('/search', methods=['GET','POST'])
+def search():
+    if request.method == 'POST':
+        form = request.form
+        search_value = form['search_string']
+        search = "%{}%".format(search_value)
+        results = request.query.filter(request.username.like(search)).all()
+        return render_template('table.html',requests = results)

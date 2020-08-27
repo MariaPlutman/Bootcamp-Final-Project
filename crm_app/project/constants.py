@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Project(Enum):
+class Games(Enum):
     SKILLZ = 'Skillz'
     MATIFIC = '10 אצבעות (Matific)'
     PLETHORA = 'plethora'

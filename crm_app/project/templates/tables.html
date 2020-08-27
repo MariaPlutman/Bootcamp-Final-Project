@@ -30,7 +30,10 @@
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" id="livebox">
+                     <form method='POST'>
+                        <input type="text" class="form-control bg-light border-0 small" aria-label="Search" aria-describedby="basic-addon2" autofocus="autofocus">
+                        <input type="submit" formaction="/search" value="Search" class="button is-block is-info is-large">
+                     </form>
                     <tr>
                       <th>School Name</th>
                       <th>School ID</th>
@@ -58,7 +61,7 @@
                       <td>{{ request.message }}</td>
                       <td>{{ request.r_date }}</td>
                       <td>
-                        <a href="/auth.update/{{request.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{request.id}}">Edit</a>
+                        <a href="/auth.update/{{request.id}}" class="button is-block is-info" data-toggle="modal" data-target="#modaledit{{request.id}}">Edit</a>
                         <a href="/delete/{{request.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
                     </td>
                     </tr>
@@ -76,7 +79,7 @@
                     
                     
                                      <label>School Name:</label>
-                                      <input type="hidden"  name="id" value="{{request.school_name}}">
+                                      <input type="hidden"  name="id" value="{{request.id}}">
                     
                                      <input type="text" class="form-control" name="school_name" value="{{request.school_name}}">
                     
@@ -131,12 +134,12 @@
                     
                                 <label>Email:</label>
                
-                                <input type="text" class="form-control" name="Email" value="{{request.email}}">
+                                <input type="text" class="form-control" name="email" value="{{request.email}}">
                
                
                              </div>
 
-                             <div class="form-group">
+                             <!-- <div class="form-group">
                     
                     
                               <label>Project:</label>
@@ -144,7 +147,7 @@
                               <input type="text" class="form-control" name="project" value="{{request.project}}">
              
              
-                           </div>
+                           </div> -->
                     
                            <div class="form-group">
                     

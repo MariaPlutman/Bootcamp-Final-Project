@@ -6,8 +6,8 @@ from .constants import *
 
 
 class RequestForm(FlaskForm):
-    project = SelectField("Project",
-                          choices=[(project.name, project.value) for project in Project])
+    games = SelectField("Project",
+                          choices=[(games.name, games.value) for game in Games])
     school_id = StringField('School ID', validators=[Length(max=6)])
     school_name = StringField('School Name', validators=[DataRequired()])
     username = StringField('Client Name', validators=[DataRequired()])

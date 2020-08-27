@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(50))
     name = db.Column(db.String(50))
 
-    projects = db.relationship('Project', backref='technician')
+    # games = db.relationship('Project', backref='technician')
 
 
 class Request(UserMixin, db.Model):
@@ -27,7 +27,8 @@ class Request(UserMixin, db.Model):
     email = db.Column(db.String(50))
     problem = db.Column(db.String(100), nullable=False)
     message = db.Column(db.String(100),nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    games = db.Column(db.String(100),nullable=False)
+    # games = db.Column(db.Integer, db.ForeignKey('project.id'))
     r_date = db.Column(db.DateTime, default=date.today)
         
     def send_mail_to_technician(self):
