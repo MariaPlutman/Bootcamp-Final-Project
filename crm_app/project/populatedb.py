@@ -18,21 +18,21 @@ if __name__ == "__main__":
         db.session.commit()
 
     for name, val in constants.Problem: 
-        obj = models.Client(
+        obj = models.Problem(
             name=name
         )
         db.session.add(obj)
         db.session.commit()
 
     for name, val in constants.Status: 
-        obj = models.Client(
+        obj = models.Status(
             name=name
         )
         db.session.add(obj)
         db.session.commit()
 
     for name, val in constants.Service: 
-        obj = models.Client(
+        obj = models.Service(
             name=name
         )
         db.session.add(obj)

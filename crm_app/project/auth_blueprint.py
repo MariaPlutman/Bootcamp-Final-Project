@@ -4,6 +4,7 @@ from flask_login import login_user, logout_user, login_required
 from .models import User, Client, Request, Project
 from . import db
 from . import forms
+from . import models
 
 auth = Blueprint('auth', __name__)
 
@@ -72,28 +73,61 @@ def request_post():
     form = forms.RequestForm()
 
     if form.validate_on_submit():
-        username = request.form.get('username')
-        client_id = request.form.get('client_id')
-        school_name = request.form.get('school_name')
-        school_id = request.form.get('school_id')
-        phone = request.form.get('phone')
-        email = request.form.get('email')
-        project = request.form.get('project')
-        problem = request.form.get('problem')
+        username = form.username.data
+        client_id = form.client_id.data
+        school_name = form.school_name.data
+        school_id = form.school_id.data
+        phone = form.phone.data
+        email = form.email.data
+        project_name = form.project.data
+        problem = form.problem.data
+        message = form.message.data
+        
+        new_request = Request(username=username,client_id=client_id,school_name=school_name,school_id=school_id,phone=phone,email=email,problem=problem, message=message)
+        
+        project = models.Project.query.filter_by(name=project_name).first()
 
-        new_request = Request(username=username,client_id=client_id,school_name=school_name,school_id=school_id,phone=phone,email=email,project=project,problem=problem)
+        new_request.project = project
 
         db.session.add(new_request)
         db.session.commit()
 
         flash("Request Sent Successfully")
 
-    return redirect(url_for('Tables'))
+    return redirect(url_for('auth.request_det'))
 
 @auth.route('/tables')
 def tables():
     data = Request.query.all()
-    return render_template('tables.html', request=data)
+    return render_template('tables.html', requests=data)
 
 
+@auth.route('/update', methods = ['GET', 'POST'])
+def update():
+ 
+    if request.method == 'POST':
+        my_data = Request.query.get(request.form.get('id'))
+ 
+        my_data.school_name = request.form['school_name']
+        my_data.school_id = request.form['school_id']
+        my_data.client_id = request.form['client_id']
+        my_data.username = request.form['username']
+        my_data.phone = request.form['phone']
+        my_data.email = request.form['email']
+        my_data.project = request.form['project']
+        my_data.problem = request.form['problem']
+        my_data.message = request.form['message']
+        
+        db.session.commit()
+        flash("Employee Updated Successfully")
+ 
+        return redirect(url_for('auth.tables'))
 
+@auth.route('/delete/<id>/', methods = ['GET', 'POST'])
+def delete(id):
+    my_data = Request.query.get(id)
+    db.session.delete(my_data)
+    db.session.commit()
+    flash("Employee Deleted Successfully")
+ 
+    return redirect(url_for('auth.tables'))

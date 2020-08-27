@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 20801a7ce64a
+Revision ID: 38a0cedfd99a
 Revises: 
-Create Date: 2020-08-23 20:39:12.931825
+Create Date: 2020-08-25 20:31:31.754488
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '20801a7ce64a'
+revision = '38a0cedfd99a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,8 +23,7 @@ def upgrade():
     sa.Column('citizen_id', sa.String(length=9), nullable=True),
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('school_sign', sa.String(length=6), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('citizen_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -49,17 +48,12 @@ def upgrade():
     sa.Column('school_id', sa.String(length=50), nullable=False),
     sa.Column('phone', sa.String(length=50), nullable=True),
     sa.Column('email', sa.String(length=50), nullable=True),
-    sa.Column('problem', sa.String(length=300), nullable=False),
+    sa.Column('problem', sa.String(length=100), nullable=False),
+    sa.Column('message', sa.String(length=100), nullable=False),
     sa.Column('project_id', sa.Integer(), nullable=True),
+    sa.Column('r_date', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['project_id'], ['project.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('client_id'),
-    sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('phone'),
-    sa.UniqueConstraint('problem'),
-    sa.UniqueConstraint('school_id'),
-    sa.UniqueConstraint('school_name'),
-    sa.UniqueConstraint('username')
+    sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 

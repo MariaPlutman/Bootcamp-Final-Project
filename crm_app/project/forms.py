@@ -17,12 +17,12 @@ class RequestForm(FlaskForm):
     phone = StringField('Number')
     email = StringField(
         'Email', [Email(message='Not a valid email address.'), DataRequired()])
-    problem_type = SelectField(
+    problem = SelectField(
         choices=[(problem.name, problem.value) for problem in Problem])
     status = SelectField(
         choices=[(status.name, status.value) for status in Status])
     service = SelectField(
         choices=[(service.name, service.value) for service in Service])
-    body = TextField('Message', [DataRequired(), Length(
+    message = TextField('Message', [DataRequired(), Length(
         min=4, message=('Your message is too short.'))])
     submit = SubmitField("Post")
