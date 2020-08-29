@@ -1,26 +1,4 @@
 {% extends "base.html" %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template -->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-</head>
 
 {% block content %}
 <body id="page-top">
@@ -29,6 +7,13 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                  <div class="notification is-success is-light">
+                     {{ messages[0] }}
+                  </div>
+                  {% endif %}
+                  {% endwith %}
                   <thead>
                         <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" id="livebox">
                     <tr>
@@ -58,8 +43,8 @@
                       <td>{{ request.message }}</td>
                       <td>{{ request.r_date }}</td>
                       <td>
-                        <a href="/auth.update/{{request.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{request.id}}">Edit</a>
-                        <a href="/delete/{{request.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+                        <a href="/auth.update/{{request.id}}" class="button is-info is-normal" data-toggle="modal" data-target="#modaledit{{request.id}}">Edit</a>
+                        <a href="/delete/{{request.id}}" class="button is-danger is-normal" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
                     </td>
                     </tr>
                     <div id="modaledit{{request.id}}" class="modal fade" role="dialog">

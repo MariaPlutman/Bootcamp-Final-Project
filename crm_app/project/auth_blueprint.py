@@ -92,7 +92,9 @@ def request_post():
         db.session.add(new_request)
         db.session.commit()
 
-        flash("Request Sent Successfully")
+        if form.validate_on_submit():
+            flash("Request Sent Successfully")
+            return redirect(url_for('auth.request_det'))
 
     return redirect(url_for('auth.request_det'))
 
@@ -104,6 +106,7 @@ def tables():
 
 @auth.route('/update', methods = ['GET', 'POST'])
 def update():
+    form = forms.RequestForm()
  
     if request.method == 'POST':
         my_data = Request.query.get(request.form.get('id'))
@@ -114,12 +117,16 @@ def update():
         my_data.username = request.form['username']
         my_data.phone = request.form['phone']
         my_data.email = request.form['email']
-        my_data.project = request.form['project']
+        my_data.project_name = form.project.data
+        project = models.Project.query.filter_by(name=my_data.project_name).first()
         my_data.problem = request.form['problem']
         my_data.message = request.form['message']
         
         db.session.commit()
-        flash("Employee Updated Successfully")
+
+        if request.method == 'POST':
+            flash("Employee Updated Successfully")
+            return redirect(url_for('auth.tables'))
  
         return redirect(url_for('auth.tables'))
 
