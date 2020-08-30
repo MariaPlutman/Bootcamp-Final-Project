@@ -26,13 +26,10 @@ class Request(UserMixin, db.Model):
     phone = db.Column(db.String(50))
     email = db.Column(db.String(50))
     problem = db.Column(db.String(100), nullable=False)
+    status = db.Column(db.String(100), nullable=False)
     message = db.Column(db.String(100),nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     r_date = db.Column(db.DateTime, default=date.today)
-        
-    def send_mail_to_technician(self):
-        msg = Message('New request!', recipients=[User.email])
-        msg.body = '<b>Hello! You have a new request, please check it.</b>'
 
 class Client(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)

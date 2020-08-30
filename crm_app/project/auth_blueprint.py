@@ -2,10 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
 from .models import User, Client, Request, Project
-from . import db
-from . import forms
-from . import models
-from . import mail_mgr
+from . import db, forms, models, mail_mgr
 from flask_mail import Message
 from .config import DevConfig
 
@@ -85,9 +82,10 @@ def request_post():
         email = form.email.data
         project_name = form.project.data
         problem = form.problem.data
+        status = form.status.data
         message = form.message.data
         
-        new_request = Request(username=username,client_id=client_id,school_name=school_name,school_id=school_id,phone=phone,email=email,problem=problem, message=message)
+        new_request = Request(username=username,client_id=client_id,school_name=school_name,school_id=school_id,phone=phone,email=email,problem=problem, message=message, status=status)
         
         project = models.Project.query.filter_by(name=project_name).first()
 
@@ -102,7 +100,10 @@ def request_post():
             msg = Message(
                 subject="Skillz Support",
                 recipients=[email],
-                body="שלום רב, פנייתך התקבלה והועברה לטיפול",
+                body='''שלום רב,
+                 פנייתך התקבלה והועברה לטיפול
+                 בברכה,
+                 צוות סקילז''',
                 sender= config.MAIL_USERNAME
             )
 
@@ -134,6 +135,7 @@ def update():
         my_data.project_name = form.project.data
         project = models.Project.query.filter_by(name=my_data.project_name).first()
         my_data.problem = request.form['problem']
+        my_data.status = request.form['status']
         my_data.message = request.form['message']
         
         db.session.commit()

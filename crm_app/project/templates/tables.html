@@ -25,6 +25,7 @@
                       <th>Email</th>
                       <th>Project</th>
                       <th>Problem</th>
+                      <th>Status</th>
                       <th>Message</th>
                       <th>Date</th>
                     </tr>
@@ -40,6 +41,7 @@
                       <td>{{ request.email }}</td>
                       <td>{{ request.project }}</td>
                       <td>{{ request.problem }}</td>
+                      <td>{{ request.status }}</td>
                       <td>{{ request.message }}</td>
                       <td>{{ request.r_date }}</td>
                       <td>
@@ -140,6 +142,16 @@
            
            
                          </div>
+
+                         <div class="form-group">
+                    
+                    
+                           <label>Status:</label>
+          
+                           <input type="text" class="form-control" name="status" value="{{request.status}}">
+          
+          
+                        </div>
 
                          <div class="form-group">
                     
