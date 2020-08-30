@@ -5,6 +5,9 @@ from .models import User, Client, Request, Project
 from . import db
 from . import forms
 from . import models
+from . import mail_mgr
+from flask_mail import Message
+from .config import DevConfig
 
 auth = Blueprint('auth', __name__)
 
@@ -71,6 +74,7 @@ def request_det():
 @auth.route('/request_det',methods=['POST'])
 def request_post():
     form = forms.RequestForm()
+    config = DevConfig()
 
     if form.validate_on_submit():
         username = form.username.data
@@ -94,6 +98,16 @@ def request_post():
 
         if form.validate_on_submit():
             flash("Request Sent Successfully")
+
+            msg = Message(
+                subject="Skillz Support",
+                recipients=[email],
+                body="שלום רב, פנייתך התקבלה והועברה לטיפול",
+                sender= config.MAIL_USERNAME
+            )
+
+            # Send it !
+            mail_mgr.send(msg)
             return redirect(url_for('auth.request_det'))
 
     return redirect(url_for('auth.request_det'))
