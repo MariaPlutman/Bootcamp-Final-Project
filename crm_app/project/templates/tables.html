@@ -15,7 +15,11 @@
                   {% endif %}
                   {% endwith %}
                   <thead>
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" id="livebox">
+                     <form method="POST">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" autofocus='autofocus=' name='search_string'>
+                        <input class="button is-info is-normal" type="submit" formaction="/search" value='Search'>
+                        <input class="button is-info is-normal" type="submit" formaction="/all_results" value='All Requests'>
+                     </form>
                     <tr>
                       <th>School Name</th>
                       <th>School ID</th>
@@ -43,7 +47,7 @@
                       <td>{{ request.problem }}</td>
                       <td>{{ request.status }}</td>
                       <td>{{ request.message }}</td>
-                      <td>{{ request.r_date }}</td>
+                      <td>{{ request.r_date.strftime('%B %d, %Y') }}</td>
                       <td>
                         <a href="/auth.update/{{request.id}}" class="button is-info is-normal" data-toggle="modal" data-target="#modaledit{{request.id}}">Edit</a>
                         <a href="/delete/{{request.id}}" class="button is-danger is-normal" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>

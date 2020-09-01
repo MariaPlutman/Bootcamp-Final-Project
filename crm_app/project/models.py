@@ -12,12 +12,8 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(50))
     name = db.Column(db.String(50))
 
-    projects = db.relationship('Project', backref='technician')
-
 
 class Request(UserMixin, db.Model):
-    __searchable__ = ['username','client_id','school_name','school_id','project_id']
-
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False)
     client_id = db.Column(db.String(50), nullable=False)
@@ -28,19 +24,5 @@ class Request(UserMixin, db.Model):
     problem = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(100), nullable=False)
     message = db.Column(db.String(100),nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    project = db.Column(db.String(100), nullable=False)
     r_date = db.Column(db.DateTime, default=date.today)
-
-class Client(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    citizen_id = db.Column(db.String(9))
-    name = db.Column(db.String(100), nullable=False)
-    school_sign = db.Column(db.String(6), nullable=False)
-
-
-class Project(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-
-    technician_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    requests = db.relationship('Request', backref="project")

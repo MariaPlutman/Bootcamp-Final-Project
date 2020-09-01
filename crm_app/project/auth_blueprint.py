@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
-from .models import User, Client, Request, Project
+from .models import User, Request
 from . import db, forms, models, mail_mgr
 from flask_mail import Message
 from .config import DevConfig
@@ -80,16 +80,12 @@ def request_post():
         school_id = form.school_id.data
         phone = form.phone.data
         email = form.email.data
-        project_name = form.project.data
+        project = form.project.data
         problem = form.problem.data
         status = form.status.data
         message = form.message.data
         
-        new_request = Request(username=username,client_id=client_id,school_name=school_name,school_id=school_id,phone=phone,email=email,problem=problem, message=message, status=status)
-        
-        project = models.Project.query.filter_by(name=project_name).first()
-
-        new_request.project = project
+        new_request = Request(username=username,client_id=client_id,school_name=school_name,school_id=school_id,phone=phone,email=email,problem=problem, message=message, status=status,project=project)
 
         db.session.add(new_request)
         db.session.commit()
@@ -100,10 +96,7 @@ def request_post():
             msg = Message(
                 subject="Skillz Support",
                 recipients=[email],
-                body='''שלום רב,
-                 פנייתך התקבלה והועברה לטיפול
-                 בברכה,
-                 צוות סקילז''',
+                body=f'Hello {username}! Your request has been processed.',
                 sender= config.MAIL_USERNAME
             )
 
@@ -132,8 +125,7 @@ def update():
         my_data.username = request.form['username']
         my_data.phone = request.form['phone']
         my_data.email = request.form['email']
-        my_data.project_name = form.project.data
-        project = models.Project.query.filter_by(name=my_data.project_name).first()
+        my_data.project = request.form['project']
         my_data.problem = request.form['problem']
         my_data.status = request.form['status']
         my_data.message = request.form['message']
@@ -141,7 +133,7 @@ def update():
         db.session.commit()
 
         if request.method == 'POST':
-            flash("Employee Updated Successfully")
+            flash("Request Updated Successfully")
             return redirect(url_for('auth.tables'))
  
         return redirect(url_for('auth.tables'))
@@ -151,6 +143,22 @@ def delete(id):
     my_data = Request.query.get(id)
     db.session.delete(my_data)
     db.session.commit()
-    flash("Employee Deleted Successfully")
+    flash("Request Deleted Successfully")
  
     return redirect(url_for('auth.tables'))
+
+@auth.route('/search', methods=['GET','POST'])
+def search():
+    if request.method == 'POST':
+        form = request.form
+        search_value = form['search_string']
+        search = '%{}%'.format(search_value)
+        results = Request.query.filter(Request.school_name.like(search)).all()
+        return render_template('tables.html', requests=results)
+
+@auth.route('/all_results', methods=['GET','POST'])
+def all_results():
+    if request.method == 'POST':
+        form = request.form
+        results = Request.query.all()
+        return render_template('tables.html', requests=results)

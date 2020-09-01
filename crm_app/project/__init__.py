@@ -25,7 +25,7 @@ def create_app():
     migrate.init_app(app, db)
     mail_mgr.init_app(app)
 
-    from .models import User, Request, Project, Client
+    from .models import User, Request
 
     @login_mgr.user_loader
     def load_user(user_id):
