@@ -146,19 +146,3 @@ def delete(id):
     flash("Request Deleted Successfully")
  
     return redirect(url_for('auth.tables'))
-
-@auth.route('/search', methods=['GET','POST'])
-def search():
-    if request.method == 'POST':
-        form = request.form
-        search_value = form['search_string']
-        search = '%{}%'.format(search_value)
-        results = Request.query.filter(Request.school_name.like(search)).all()
-        return render_template('tables.html', requests=results)
-
-@auth.route('/all_results', methods=['GET','POST'])
-def all_results():
-    if request.method == 'POST':
-        form = request.form
-        results = Request.query.all()
-        return render_template('tables.html', requests=results)

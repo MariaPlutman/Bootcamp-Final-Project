@@ -5,7 +5,12 @@ basedir = os.path.abspath(
 )
 
 class Config:
-    pass
+    MAIL_SERVER     = "smtp.gmail.com"
+    MAIL_PORT       = 587
+    MAIL_USE_TLS    = True
+    MAIL_USE_SSL    = False
+    MAIL_USERNAME   = 'mp.project.di@gmail.com'
+    MAIL_PASSWORD   = '112233Maria'
 
 class DevConfig(Config):
     SECRET_KEY = "arandomsecretkey"

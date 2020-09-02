@@ -8,9 +8,9 @@ from datetime import date
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(50), unique=True)
-    password = db.Column(db.String(50))
-    name = db.Column(db.String(50))
+    email = db.Column(db.String(300), unique=True)
+    password = db.Column(db.String(500))
+    name = db.Column(db.String(300))
 
 
 class Request(UserMixin, db.Model):
