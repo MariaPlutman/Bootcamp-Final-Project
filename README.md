@@ -20,4 +20,6 @@ I used SQLite to avoid having to install any extra dependencies for the database
 The problem I faced was how I can send the request form and display it on another route. For it solving I needded to build the right connections between database, forms, models and configurations.
 
 The working link: https://crmsupport.herokuapp.com/
-Presentation: https://www.loom.com/share/f72389671e924423bf0b8f0044ca660e
+
+Presentation: 
+https://www.loom.com/share/f72389671e924423bf0b8f0044ca660e
